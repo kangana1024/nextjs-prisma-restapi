@@ -1,34 +1,104 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Demo Nextjs Express Prisma
 
-## Getting Started
+## Install Typescript
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+``` bash
+yarn add --dev @types/react@latest ts-node@latest @types/node@latest typescript@latest @types/next
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Install Express
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+Install Express And Util
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+``` bash
+yarn add express body-parser compression cookie-parser
+yarn add @babel/register dotenv @babel/core
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+Install Express Type OF Dev
 
-## Learn More
+``` bash
+yarn add --dev @types/body-parser @types/compression @types/cookie-parser @types/express
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Install Prisma
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Install Prisma Dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+``` bash
+yarn add --dev prisma
+```
 
-## Deploy on Vercel
+Install Prisma CLI
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+``` bash
+npx prisma
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Init Prisma to project
+
+``` bash
+npx prisma init
+```
+
+## Install Tailwind
+
+Install Package
+
+``` bash
+yarn add --dev tailwindcss@latest postcss@latest autoprefixer@latest
+```
+
+Add Tailwind Config
+
+``` bash
+npx tailwindcss init -p
+```
+
+Add File `tailwind.config.js`
+
+``` javascript
+module.exports = {
+    purge: ['./pages/**/*.{js,ts,jsx,tsx}', './src/**/*.{js,ts,jsx,tsx}'],
+    darkMode: false, // or 'media' or 'class'
+    theme: {
+        extend: {},
+    },
+    variants: {
+        extend: {},
+    },
+    plugins: [],
+}
+```
+
+Add File `postcss.config.js`
+
+``` javascript
+module.exports = {
+    plugins: {
+        tailwindcss: {},
+        autoprefixer: {},
+    },
+}
+```
+
+Change File `styles/globals.css`
+
+``` css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+Add Import CSS TO `pages/_app.tsx`
+
+``` typescript
+import { AppProps } from 'next/app'
+import '../styles/globals.css'
+
+const MyApp = ({ Component, pageProps }: AppProps) => {
+  return <Component {...pageProps} />
+}
+
+export default MyApp
+```
