@@ -7,7 +7,7 @@ type TodoInputs = {
 };
 const Home = () => {
   const [loading, setLoading] = useState<boolean>(false)
-  const { register, handleSubmit, watch, formState: { errors } } = useForm<TodoInputs>();
+  const { register, handleSubmit } = useForm<TodoInputs>();
   const onSubmit: SubmitHandler<TodoInputs> = async (value) => {
     setLoading(true)
     const config: AxiosRequestConfig = {
