@@ -1,6 +1,6 @@
-import { Todo } from ".prisma/client";
+import { Todo, TodoStatus } from ".prisma/client";
 import axios, { AxiosRequestConfig } from "axios";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Swal from "sweetalert2"
 import ItemList from "../src/components/itemlist";
@@ -14,10 +14,11 @@ const Home = () => {
   const [items, setItems] = useState<Todo[]>([])
   const { register, handleSubmit, setValue } = useForm<TodoInputs>();
   const setNewVersion = () => {
-    setVersion(new Date('2012.08.10').getTime() / 1000)
+    setVersion(new Date().getTime() / 1000)
   }
   const fetchAllTodo = async () => {
     setLoading(true)
+    console.log("Fetch todo")
     try {
       const allItem = await axios({
         method: 'GET',
@@ -69,7 +70,41 @@ const Home = () => {
     } finally {
       setLoading(false)
     }
-  };
+  }
+
+  const handleChangeStatus = (id: number, status: TodoStatus) => async (e: SyntheticEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    const config: AxiosRequestConfig = {
+      method: 'post',
+      url: '/api/v1/todos/changestatus/' + id,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        status
+      })
+    }
+    try {
+      const createTodo = await axios(config)
+      if (createTodo.data) {
+        Swal.fire({
+          title: 'Add Todo Success.',
+          icon: 'success'
+        })
+        clearForm()
+        setNewVersion()
+      }
+    } catch (error) {
+      Swal.fire({
+        title: 'Add Todo Error.',
+        text: error,
+        icon: 'error'
+      })
+    } finally {
+      setLoading(false)
+    }
+  }
 
   // Life cycle
   useEffect(() => {
@@ -94,7 +129,7 @@ const Home = () => {
         <div>
           {
             items.length > 0 ? items.map((item, index: number) => {
-              return <ItemList status={item.status} title={item.title} detail={item.detail} key={"List-todo-Item-" + item.title + "-" + index} />
+              return <ItemList todo={item} handleChangeStatus={handleChangeStatus} key={"List-todo-Item-" + item.title + "-" + index} />
             }) : null
           }
         </div>
