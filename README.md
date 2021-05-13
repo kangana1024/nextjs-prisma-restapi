@@ -102,3 +102,29 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
 export default MyApp
 ```
+
+## วิธีการ run
+
+``` bash
+yarn dev
+```
+
+## วิธีการ migation
+
+Backup Schema ปัจจุบัน
+
+``` bash
+npx prisma migrate dev --name initTodo
+```
+
+Migate Database
+
+``` bash
+npx prisma migrate dev
+```
+
+Clear Database
+
+``` bash
+npx prisma migrate reset
+```
