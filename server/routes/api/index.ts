@@ -8,7 +8,7 @@ router.get('/', (_req, res) => res.json({ ok: true }))
 router.get('/todos', async (_req, res) => {
   const todos = await prisma.todo.findMany()
   return res.json({
-    todo: { ...todos },
+    todo: [...todos],
     code: 201
   })
 })
