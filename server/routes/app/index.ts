@@ -5,7 +5,7 @@ import nextapp from '../../nextapp'
 const router = express.Router()
 const handler = nextapp.getRequestHandler()
 const { parse } = url
-router.all('/api/auth/*', (req, res) => {
+router.all('/*', (req, res) => {
   const { pathname, query } = parse(req.url, true)
   if (pathname === 'a' || pathname === 'b')
     nextapp.render(req, res, pathname, query);
